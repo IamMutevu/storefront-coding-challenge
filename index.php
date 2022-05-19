@@ -41,24 +41,24 @@
                 <label class="mb-0" for="cost">Actions</label>
             </div>
         </div>
-        <div class="form-group row mb-2" id="template">
+        <div class="form-group row mb-2 item-fields" id="template">
             <div class="col-md-3">
-                <input type="email" class="form-control" id="description" name="description">
+                <input type="email" class="form-control" name="description">
             </div>
             <div class="col-md-2">
-                <input type="number" class="form-control" id="cost" name="cost" value="0">
+                <input type="number" class="form-control cost" name="cost[]" value="0">
             </div>
             <div class="col-md-2">
-                <input type="number" class="form-control" id="cost" name="quantity" value="0">
+                <input type="number" class="form-control quantity" name="quantity[]" value="0">
             </div>
             <div class="col-md-2">
-                <input type="number" class="form-control" id="cost" name="vat" value="0">
+                <input type="number" class="form-control vat" name="vat[]" value="0">
             </div>
             <div class="col-md-2">
-                <input type="number" class="form-control" id="cost" value="0" name="cost" readonly>
+                <input type="number" class="form-control" value="0" name="total" readonly>
             </div>
             <div class="col-md-1 d-flex align-items-center text-center text-danger">
-                <a><i class="fa fa-trash"></i></a>
+                <a class="deleteItemButton"><i class="fa fa-trash"></i></a>
             </div>
         </div>
         <div class="form-group row mb-4 pb-4">
@@ -101,52 +101,34 @@
 <script>
 $(document).ready(function(){
     $(document).on("click", "#addItemButton", function(e){
-        console.log("dsf");
+        console.log("Add item fields");
         var control = $("#template");
         var clone = $(control).clone();
         $(clone).removeAttr('id').insertAfter(control);
     });
 
+    $(document).on("click", ".deleteItemButton", function(e){
+        e.preventDefault();
+        if($(this).closest('.form-group').attr('id') != "template"){
+            console.log("Delete item fields");
+            $(this).closest('.form-group').remove();
+        }
+        updateOutputs();
+    });
+
     $(document).on("change", "[name='county_id']", function(e){
         var county = $(this).val();
-        $.updateOutputs(county);
+        updateOutputs(county);
     });
 });
-(function($){
-    $.updateTotal = function (county){
-        $('select').selectpicker();
-        $.get("/data/sub_county/get_list_county_filter?county="+county, function(data, status){
-            var data = JSON.parse(data);
-            var sub_counties = '';
-            $.each(data.sub_counties, function(k,v){
-                sub_counties += 
-                    `
-                        <option value='${v.id}'>${v.name}</option>
-                    `;
 
-              });
-            $('[name="sub_county_id"]').html(sub_counties);
-            $('select').selectpicker('refresh');
-        });    
-    }
+function updateTotal(){
+    
+}
 
-    $.updateOutputs = function (county){
-        $('select').selectpicker();
-        $.get("/data/sub_county/get_list_county_filter?county="+county, function(data, status){
-            var data = JSON.parse(data);
-            var sub_counties = '';
-            $.each(data.sub_counties, function(k,v){
-                sub_counties += 
-                    `
-                        <option value='${v.id}'>${v.name}</option>
-                    `;
+function updateOutputs(){
 
-              });
-            $('[name="sub_county_id"]').html(sub_counties);
-            $('select').selectpicker('refresh');
-        });    
-    }
-})(jQuery);
+}
 </script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
