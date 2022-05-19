@@ -22,27 +22,27 @@
 
       <div class="container-fluid py-4">
         <div class="form-group row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <label class="mb-0" for="description">Description</label>
             </div>
             <div class="col-md-2">
                 <label class="mb-0" for="cost">Cost</label>
             </div>
             <div class="col-md-2">
-                <label class="mb-0" for="cost">Cost</label>
+                <label class="mb-0" for="cost">Quantity</label>
             </div>
             <div class="col-md-2">
-                <label class="mb-0" for="cost">Cost</label>
-            </div>
-            <div class="col-md-2">
-                <label class="mb-0" for="cost">Total</label>
+                <label class="mb-0" for="cost">VAT(%)</label>
             </div>
             <div class="col-md-1">
+                <label class="mb-0" for="cost">Total</label>
+            </div>
+            <div class="col-md-1 text-center">
                 <label class="mb-0" for="cost">Actions</label>
             </div>
         </div>
         <div class="form-group row mb-2 item-fields" id="template">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <input type="email" class="form-control" name="description">
             </div>
             <div class="col-md-2">
@@ -54,10 +54,10 @@
             <div class="col-md-2">
                 <input type="number" class="form-control vat" name="vat[]" value="0">
             </div>
-            <div class="col-md-2">
-                <input type="number" class="form-control" value="0" name="total" readonly>
+            <div class="col-md-1 d-flex align-items-center text-bold">
+                <div class="total">$0</div>
             </div>
-            <div class="col-md-1 d-flex align-items-center text-center text-danger">
+            <div class="col-md-1 d-flex align-items-center justify-content-center text-center text-danger">
                 <a class="deleteItemButton"><i class="fa fa-trash"></i></a>
             </div>
         </div>
@@ -116,14 +116,26 @@ $(document).ready(function(){
         updateOutputs();
     });
 
-    $(document).on("change", "[name='county_id']", function(e){
-        var county = $(this).val();
-        updateOutputs(county);
+    $(document).on("keyup", "[name='cost[]']", function(e){
+        var row = $(this).closest('.form-group');
+        updateTotal(row);
+        updateOutputs();
+    });
+
+    $(document).on("keyup", "[name='quantity[]']", function(e){
+        var row = $(this).closest('.form-group');
+        updateTotal(row);
+        updateOutputs();
     });
 });
 
-function updateTotal(){
-    
+function updateTotal(row){
+    console.log("Hm");
+    var cost = $(row).find("[name='cost[]']").val();
+    var quantity = $(row).find("[name='quantity[]']").val();
+
+    var total = cost * quantity;
+    $(row).find(".total").html("$"+total);
 }
 
 function updateOutputs(){
