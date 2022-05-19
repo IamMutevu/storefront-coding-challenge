@@ -31,10 +31,10 @@
             <div class="col-md-2">
                 <label class="mb-0" for="cost">Quantity</label>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <label class="mb-0" for="cost">VAT(%)</label>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-2">
                 <label class="mb-0" for="cost">Total</label>
             </div>
             <div class="col-md-1 text-center">
@@ -51,10 +51,10 @@
             <div class="col-md-2">
                 <input type="number" class="form-control quantity" name="quantity[]" value="0">
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <input type="number" class="form-control vat" name="vat[]" value="0">
             </div>
-            <div class="col-md-1 d-flex align-items-center text-bold">
+            <div class="col-md-2 d-flex align-items-center text-bold">
                 <div class="total">$0</div>
             </div>
             <div class="col-md-1 d-flex align-items-center justify-content-center text-center text-danger">
@@ -63,7 +63,7 @@
         </div>
         <div class="form-group row mb-4 pb-4">
             <div class="col-md-12">
-                <button class="btn btn-info btn-sm" id="addItemButton">Add item</button>
+                <button class="btn btn-secondary btn-sm" id="addItemButton">Add item</button>
             </div>
         </div>
         <hr>
@@ -122,7 +122,19 @@ $(document).ready(function(){
         updateOutputs();
     });
 
+    $(document).on("change", "[name='cost[]']", function(e){
+        var row = $(this).closest('.form-group');
+        updateTotal(row);
+        updateOutputs();
+    });
+
     $(document).on("keyup", "[name='quantity[]']", function(e){
+        var row = $(this).closest('.form-group');
+        updateTotal(row);
+        updateOutputs();
+    });
+
+    $(document).on("change", "[name='quantity[]']", function(e){
         var row = $(this).closest('.form-group');
         updateTotal(row);
         updateOutputs();
@@ -130,7 +142,7 @@ $(document).ready(function(){
 });
 
 function updateTotal(row){
-    console.log("Hm");
+    console.log("Updating total");
     var cost = $(row).find("[name='cost[]']").val();
     var quantity = $(row).find("[name='quantity[]']").val();
 
