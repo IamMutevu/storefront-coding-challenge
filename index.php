@@ -55,7 +55,7 @@
                 <input type="number" class="form-control vat" name="vat[]" value="0">
             </div>
             <div class="col-md-2 d-flex align-items-center text-bold">
-                <div class="total">$0</div>
+                <div>$<span class="total">0</span></div>
             </div>
             <div class="col-md-1 d-flex align-items-center justify-content-center text-center text-danger">
                 <a class="deleteItemButton"><i class="fa fa-trash"></i></a>
@@ -73,16 +73,16 @@
                     <div>
                         Subtotal
                     </div>
-                    <div id="subtotal">
-                        $0
+                    <div>
+                        $<span id="subtotal">0</span>
                     </div>
                 </div>
                 <div class="d-flex justify-content-between">
                     <div>
                         VAT Total
                     </div>
-                    <div id="vat-total">
-                        $0
+                    <div>
+                        $<span id="vat-total">0</span>
                     </div>
                 </div>
                 <hr>
@@ -91,7 +91,7 @@
                         <h2>Total</h2>
                     </div>
                     <div >
-                        <h2 id="total">$0</h2>
+                        <h2>$<span id="total">0</span></h2>
                     </div>
                 </div>
             </div>
@@ -107,7 +107,7 @@ $(document).ready(function(){
         $(clone).find("[name='cost[]']").val("0");
         $(clone).find("[name='quantity[]']").val("0");
         $(clone).find("[name='vat[]']").val("0");
-        $(clone).find(".total").html("$0");
+        $(clone).find(".total").html("0");
         $(clone).removeAttr('id').insertBefore(this);
     });
 
@@ -117,46 +117,91 @@ $(document).ready(function(){
             console.log("Delete item fields");
             $(this).closest('.form-group').remove();
         }
-        updateOutputs();
+        updateTotal();
     });
 
     $(document).on("keyup", "[name='cost[]']", function(e){
         var row = $(this).closest('.form-group');
-        updateTotal(row);
-        updateOutputs();
+        updateRowTotal(row);
+        updateTotal();
     });
 
     $(document).on("change", "[name='cost[]']", function(e){
         var row = $(this).closest('.form-group');
-        updateTotal(row);
-        updateOutputs();
+        updateRowTotal(row);
+        updateTotal();
     });
 
     $(document).on("keyup", "[name='quantity[]']", function(e){
         var row = $(this).closest('.form-group');
-        updateTotal(row);
-        updateOutputs();
+        updateRowTotal(row);
+        updateTotal();
     });
 
     $(document).on("change", "[name='quantity[]']", function(e){
         var row = $(this).closest('.form-group');
-        updateTotal(row);
-        updateOutputs();
+        updateRowTotal(row);
+        updateTotal();
+    });
+
+    $(document).on("keyup", "[name='vat[]']", function(e){
+        var row = $(this).closest('.form-group');
+        updateRowTotal(row);
+        updateTotal();
+    });
+
+    $(document).on("change", "[name='vat[]']", function(e){
+        var row = $(this).closest('.form-group');
+        updateRowTotal(row);
+        updateTotal();
     });
 });
 
-function updateTotal(row){
-    console.log("Updating total");
+function updateRowTotal(row){
+    console.log("Updating row total");
     var cost = $(row).find("[name='cost[]']").val();
     var quantity = $(row).find("[name='quantity[]']").val();
 
     var total = cost * quantity;
-    $(row).find(".total").html("$"+total);
+    $(row).find(".total").html(total);
 }
 
-function updateOutputs(){
+function updateTotal(){
+    var total = 0;
+    var subtotal = 0;
+    var vat_total = 0;
+    var row_total = 0;
+    var row_vat = 0;
+    var row_vat_amount = 0;
+    // $('.total').each(function(index, item) {
+    //     subtotal += parseInt($(this).text());
+    // });
 
+    // $("[name='vat[]']").each(function(index, item) {
+    //     subtotal += parseInt($(this).text());
+    // });
+
+    $(".item-fields").each(function(index, item) {
+        row_total = parseInt($(this).find('.total').text());
+        row_vat = parseInt($(this).find("[name='vat[]']").val());
+        
+        row_vat_amount = row_vat/100 * row_total;
+        vat_total += row_vat_amount;
+        subtotal += row_total;
+        
+
+    });
+    
+    total = subtotal + vat_total;
+
+    $("#vat-total").html(vat_total);
+    $("#subtotal").html(subtotal);
+    $("#total").html(total);
+
+    // console.log(vat_total);
+    // console.log(subtotal);
 }
+
 </script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
