@@ -186,13 +186,23 @@ function updateTotal(){
         subtotal += row_total;
         
         if(row_vat != 0 && !isNaN(row_vat)){
-            if($("#summaries").find("[data-vat='"+row_vat+"']").length != 0){
+            // if($("#summaries").find("[data-vat='"+row_vat+"']").length != 0){
+            //     console.log("found");
+            //     console.log($("#summaries").find("[data-vat='"+row_vat+"']").text());
+            // }
+            // else{
+            //     console.log("nomaaa");
+            //     console.log($("#summaries").find("[data-vat='"+row_vat+"']").text());
+            // }
+
+            if($("[value='"+row_vat+"']").length != 0){
                 console.log("found");
-                console.log($("#summaries").find("[data-vat='"+row_vat+"']"));
+                // console.log($("[data-vat='"+row_vat+"']").length);
             }
             else{
                 console.log("nomaaa");
-                console.log($("#summaries").find("[data-vat='"+row_vat+"']"));
+                // console.log($("[data-vat='"+row_vat+"']").length);
+
             }
             vat_html += 
             `
