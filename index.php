@@ -46,18 +46,18 @@
                 <input type="email" class="form-control" id="description" name="description">
             </div>
             <div class="col-md-2">
-                <input type="number" class="form-control" id="cost" name="cost">
+                <input type="number" class="form-control" id="cost" name="cost" value="0">
             </div>
             <div class="col-md-2">
-                <input type="number" class="form-control" id="cost" name="cost">
+                <input type="number" class="form-control" id="cost" name="quantity" value="0">
             </div>
             <div class="col-md-2">
-                <input type="number" class="form-control" id="cost" name="cost">
+                <input type="number" class="form-control" id="cost" name="vat" value="0">
             </div>
             <div class="col-md-2">
-                <input type="number" class="form-control" id="cost" value="2500" name="cost" readonly>
+                <input type="number" class="form-control" id="cost" value="0" name="cost" readonly>
             </div>
-            <div class="col-md-1 d-flex align-items-center">
+            <div class="col-md-1 d-flex align-items-center text-center text-danger">
                 <a><i class="fa fa-trash"></i></a>
             </div>
         </div>
@@ -68,32 +68,32 @@
         </div>
         <hr>
         <div class="row d-flex justify-content-end">
-            <div class="col-md-5">
-            <div class="d-flex justify-content-between">
-                <div>
-                    Subtotal
+            <div class="col-md-5 pr-4 mr-4">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        Subtotal
+                    </div>
+                    <div id="subtotal">
+                        $0
+                    </div>
                 </div>
-                <div>
-                    Subtotal
+                <div class="d-flex justify-content-between">
+                    <div>
+                        VAT Total
+                    </div>
+                    <div id="vat-total">
+                        $0
+                    </div>
                 </div>
-            </div>
-            <div class="d-flex justify-content-between">
-                <div>
-                    VAT Total
+                <hr>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h2>Total</h2>
+                    </div>
+                    <div >
+                        <h2 id="total">$0</h2>
+                    </div>
                 </div>
-                <div>
-                    Subtotal
-                </div>
-            </div>
-            <hr>
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <h2>Total</h2>
-                </div>
-                <div>
-                    Subtotal
-                </div>
-            </div>
             </div>
         </div>
       </div>
