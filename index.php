@@ -68,8 +68,8 @@
         </div>
         <hr>
         <div class="row d-flex justify-content-end">
-            <div class="col-md-5 pr-4 mr-4">
-                <div class="d-flex justify-content-between">
+            <div class="col-md-5 pr-4 mr-4" id="summaries">
+                <div class="d-flex justify-content-between" id="subtotals-elements">
                     <div>
                         Subtotal
                     </div>
@@ -167,19 +167,15 @@ function updateRowTotal(row){
 }
 
 function updateTotal(){
+    $(".vat-breakdowns").remove();
+
     var total = 0;
     var subtotal = 0;
     var vat_total = 0;
     var row_total = 0;
     var row_vat = 0;
-    var row_vat_amount = 0;
-    // $('.total').each(function(index, item) {
-    //     subtotal += parseInt($(this).text());
-    // });
+    var vat_html = "";
 
-    // $("[name='vat[]']").each(function(index, item) {
-    //     subtotal += parseInt($(this).text());
-    // });
 
     $(".item-fields").each(function(index, item) {
         row_total = parseInt($(this).find('.total').text());
@@ -189,17 +185,40 @@ function updateTotal(){
         vat_total += row_vat_amount;
         subtotal += row_total;
         
+        if(row_vat != 0 && !isNaN(row_vat)){
+            if($("#summaries").find("[data-vat='"+row_vat+"']").length != 0){
+                console.log("found");
+                console.log($("#summaries").find("[data-vat='"+row_vat+"']"));
+            }
+            else{
+                console.log("nomaaa");
+                console.log($("#summaries").find("[data-vat='"+row_vat+"']"));
+            }
+            vat_html += 
+            `
+            <div class="d-flex justify-content-between vat-breakdowns" data-vat="${row_vat}">
+                <div>
+                    VAT (${row_vat}%)
+                </div>
+                <div>
+                    $<span id="vat-total">${row_vat_amount}</span>
+                </div>
+            </div>
+            `;
+        }
+        else{
+            row_vat = 0;
+        }
 
+        
     });
-    
+
     total = subtotal + vat_total;
 
     $("#vat-total").html(vat_total);
     $("#subtotal").html(subtotal);
     $("#total").html(total);
-
-    // console.log(vat_total);
-    // console.log(subtotal);
+    $(vat_html).insertAfter("#subtotals-elements");
 }
 
 </script>
