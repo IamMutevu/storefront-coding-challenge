@@ -107,7 +107,8 @@ $(document).ready(function(){
         $(clone).find("[name='cost[]']").val("0");
         $(clone).find("[name='quantity[]']").val("0");
         $(clone).find("[name='vat[]']").val("0");
-        $(clone).removeAttr('id').insertAfter(control);
+        $(clone).find(".total").html("$0");
+        $(clone).removeAttr('id').insertBefore(this);
     });
 
     $(document).on("click", ".deleteItemButton", function(e){
