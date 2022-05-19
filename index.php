@@ -104,6 +104,9 @@ $(document).ready(function(){
         console.log("Add item fields");
         var control = $("#template");
         var clone = $(control).clone();
+        $(clone).find("[name='cost[]']").val("0");
+        $(clone).find("[name='quantity[]']").val("0");
+        $(clone).find("[name='vat[]']").val("0");
         $(clone).removeAttr('id').insertAfter(control);
     });
 
